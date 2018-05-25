@@ -1,8 +1,19 @@
 {
     "name": "@lovejs/cupidon-client",
-    "version": "1.0.0",
-    "main": "index.js",
+    "author": "Vincent <vincent@fullstack.pro>",
+    "version": "0.0.1",
+    "description": "Lovejs cupidon client",
+    "main": "src/index.js",
+    "keywords": ["lovejs", "cupidon", "lovejs cupidon client"],
     "license": "MIT",
+    "homepage": "http://lovejs.io/",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lovejs/lovejs-cupidon-client.git"
+    },
+    "bugs": {
+        "url": "https://github.com/lovejs/lovejs-cupidon-client/issues"
+    },
     "scripts": {
         "start": "webpack-dev-server --mode development --open",
         "build": "webpack --mode production"
