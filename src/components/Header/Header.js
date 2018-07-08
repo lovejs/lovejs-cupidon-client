@@ -4,32 +4,53 @@ import { Menu } from "@material-ui/icons";
 import { withStyles, AppBar, Toolbar, IconButton, Hidden, Button } from "@material-ui/core";
 import cx from "classnames";
 
-import headerStyle from "variables/styles/headerStyle.jsx";
+import {
+    container,
+    defaultFont,
+    primaryColor,
+    defaultBoxShadow,
+    infoColor,
+    successColor,
+    warningColor,
+    dangerColor
+} from "variables/styles";
+
+const headerStyle = theme => ({
+    appBar: {
+        top: "-30px",
+        [theme.breakpoints.down("md")]: {
+            top: "-15px"
+        },
+        backgroundColor: "transparent",
+        boxShadow: "none",
+        borderBottom: "0",
+        marginBottom: "0",
+        position: "absolute",
+        width: "100%",
+        paddingTop: "10px",
+        zIndex: "1029",
+        color: "#555555",
+        border: "0",
+        borderRadius: "3px",
+        padding: "10px 0",
+        transition: "all 150ms ease 0s",
+        minHeight: "50px",
+        display: "block"
+    },
+    container,
+    appResponsive: {
+        top: "8px"
+    }
+});
 
 function Header({ ...props }) {
-    function makeBrand() {
-        var name;
-        props.routes.map((prop, key) => {
-            if (prop.path === props.location.pathname) {
-                name = prop.navbarName;
-            }
-            return null;
-        });
-        return name;
-    }
     const { classes, color } = props;
     const appBarClasses = cx({
         [" " + classes[color]]: color
     });
     return (
-        <AppBar className={classes.appBar + appBarClasses}>
+        <AppBar className={classes.appBar}>
             <Toolbar className={classes.container}>
-                <div className={classes.flex}>
-                    {/* Here we create navbar brand, based on route name */}
-                    <Button href="#" className={classes.title}>
-                        {makeBrand()}
-                    </Button>
-                </div>
                 <Hidden mdUp>
                     <IconButton
                         className={classes.appResponsive}

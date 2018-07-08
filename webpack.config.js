@@ -1,6 +1,5 @@
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const VirtualModulePlugin = require("virtual-module-webpack-plugin");
 
 const context = __dirname;
 const localPath = target => path.resolve(context, target);
@@ -18,7 +17,11 @@ module.exports = {
                 exclude: /node_modules\/(?!@lovejs\/cupidon)/,
                 use: {
                     loader: "babel-loader",
-                    options: {}
+                    options: {
+                        babelrc: true,
+                        extends: path.join(__dirname + "/.babelrc"),
+                        cacheDirectory: true
+                    }
                 }
             },
             {
@@ -56,7 +59,7 @@ module.exports = {
         alias: {}
     },
     devServer: {
-        contentBase: "./dist",
+        contentBase: localPath("dist"),
         historyApiFallback: true
     },
     plugins: [

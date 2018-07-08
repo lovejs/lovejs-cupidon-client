@@ -1,49 +1,8 @@
-const fs = require("fs");
-
-module.exports = ({ outputPath, extensions }) => {
+module.exports = options => {
     const webpack = require("webpack");
-    const configuration = require("./webpack.config.js");
-    const VirtualModulePlugin = require("virtual-module-webpack-plugin");
+    const getConfiguration = require("./configuration");
 
-    configuration.mode = "development";
-    configuration.output.path = outputPath;
-    configuration.plugins.push(
-        new webpack.DefinePlugin({
-            __CUPIDON_EXTENSIONS__: JSON.stringify(extensions)
-        })
-    );
-
-    let imports = [];
-    let components = [];
-
-    for (let extension of extensions) {
-        const componentPath = extension.component;
-        const componentName = extension.name;
-
-        configuration.plugins.push(
-            new VirtualModulePlugin({
-                moduleName: `src/extensions/${componentName}.js`,
-                contents: fs.readFileSync(componentPath).toString()
-            })
-        );
-        imports.push(`import ${componentName} from 'extensions/${componentName}';`);
-        components.push(componentName);
-    }
-
-    const indexContent = `   
-${imports.join("\n")}
-const components = {
-    ${components.join(",\n")}
-};
-export default components; 
-    `;
-
-    configuration.plugins.push(
-        new VirtualModulePlugin({
-            moduleName: `src/extensions/index.js`,
-            contents: indexContent
-        })
-    );
+    const configuration = getConfiguration(options);
 
     return new Promise((resolve, reject) => {
         const compiler = webpack(configuration, (err, stats) => {
