@@ -16,7 +16,7 @@ import background from "assets/img/bg-pattern.svg";
 import routes from "./routes";
 import Emitter from "./emitter";
 
-const ws = `ws://${window.location.host}/__cupidon`;
+const ws = `ws${window.location.protocol.substr(-2, 1) == "s" ? "s" : ""}://${window.location.host}/__cupidon`;
 const api = extension => async (query, params = {}) => axios.get(`query`, { params: { ext: extension, query, ...params } });
 
 const styles = theme => ({
